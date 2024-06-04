@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #5a5a5a;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        textarea, input[type="submit"] {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        textarea {
+            height: 150px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .table-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <title>Act. 2.2 Realizar el Siguiente Analizador Léxico,  Sintáctico WEB FLASK</title>
+</head>
+<body>
+    <h1>Act. 2.2 Realizar el Siguiente Analizador Léxico,  Sintáctico WEB FLASK</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <label for="code">Ingresa el código aquí:</label>
+        <textarea name="code" placeholder="Escribe o pega el código aquí..."></textarea>
+        <input type="submit" value="Ejecutar Análisis">
+    </form>
+
+    <div class="table-container">
+        {% if lexical_result %}
+        <h2>Análisis Léxico</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Linea</th>
+                    <th>Posición</th>
+                    <th>Tipo de Caracter</th>
+                    <th>Caracter</th>
+                    <th>Palabra Reservada</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for line in lexical_result %}
+                <tr>
+                    <td>{{ line[0] }}</td>
+                    <td>{{ line[1] }}</td>
+                    <td>{{ line[2] }}</td>
+                    <td>{{ line[3] if line[2] != 'Palabra reservada' else '' }}</td>
+                    <td>{{ line[3] if line[2] == 'Palabra reservada' else '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        {% if syntactic_result %}
+        <h2>Análisis Sintáctico</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Linea</th>
+                    <th>Tipo de Estructura</th>
+                    <th>Estructura Correcta</th>
+                    <th>Estructura Incorrecta</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for line in syntactic_result %}
+                <tr>
+                    <td>{{ line[0] }}</td>
+                    <td>{{ line[1] }}</td>
+                    <td>{{ '✓' if line[2] else '' }}</td>
+                    <td>{{ '✗' if not line[2] else '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
